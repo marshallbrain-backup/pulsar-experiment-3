@@ -1,4 +1,7 @@
 package com.brain.pulsar
 
-class Resource {
+data class Resource (
+		val resourceType: ResourceType,
+		var amount: Int
+){
 }
