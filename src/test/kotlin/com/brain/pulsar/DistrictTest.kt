@@ -1,9 +1,7 @@
 package com.brain.pulsar
 
-import org.junit.jupiter.api.BeforeEach
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class DistrictTest {
 	
@@ -16,11 +14,17 @@ internal class DistrictTest {
 	
 	@Test
 	fun `resource production`() {
+		val actual = district.resourceProduction
+		val expected = mapOf(Pair(minerals, 4))
 		
+		assertThat(actual).containsAllEntriesOf(expected)
 	}
 	
 	@Test
 	fun `resource upkeep`() {
-	
+		val actual = district.resourceUpkeep
+		val expected = mapOf(Pair(energy, 1))
+		
+		assertThat(actual).containsAllEntriesOf(expected)
 	}
 }
