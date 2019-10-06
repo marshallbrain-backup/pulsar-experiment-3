@@ -5,7 +5,7 @@ class District (
 ){
 	
 	val resourceUpkeep = mutableMapOf<ResourceType, Int>()
-	val resourceProducton = mutableMapOf<ResourceType, Int>()
+	val resourceProduction = mutableMapOf<ResourceType, Int>()
 	
 	init {
 		
@@ -17,9 +17,9 @@ class District (
 		}
 		
 		for (r in districtType.production){
-			val t = resourceProducton.putIfAbsent(r.resourceType, r.amount)
+			val t = resourceProduction.putIfAbsent(r.resourceType, r.amount)
 			if (t != null) {
-				resourceProducton[r.resourceType] = t + r.amount
+				resourceProduction[r.resourceType] = t + r.amount
 			}
 		}
 		
