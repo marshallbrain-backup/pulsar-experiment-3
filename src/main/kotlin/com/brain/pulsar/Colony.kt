@@ -1,6 +1,6 @@
 package com.brain.pulsar
 
-class Colony (
+data class Colony (
 		val body: Body
 ){
 	

@@ -1,6 +1,6 @@
 package com.brain.pulsar
 
-class DistrictType (
+data class DistrictType (
 		val id: String,
 		val buildType: Int = 0,
 		val cost: List<Resource> = listOf(),

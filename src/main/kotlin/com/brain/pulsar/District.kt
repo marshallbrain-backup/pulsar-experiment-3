@@ -1,6 +1,6 @@
 package com.brain.pulsar
 
-class District (
+data class District (
 		var districtType: DistrictType
 ){
 	
