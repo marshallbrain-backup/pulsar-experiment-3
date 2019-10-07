@@ -1,5 +1,7 @@
-package com.brain.pulsar
+package com.brain.pulsar.colony.buildables
 
+import com.brain.pulsar.colony.resources.Resource
+import com.brain.pulsar.colony.resources.ResourceType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

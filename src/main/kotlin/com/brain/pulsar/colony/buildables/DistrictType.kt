@@ -1,4 +1,7 @@
-package com.brain.pulsar
+package com.brain.pulsar.colony.buildables
+
+import com.brain.pulsar.colony.resources.Job
+import com.brain.pulsar.colony.resources.Resource
 
 data class DistrictType (
 		val id: String,

@@ -1,4 +1,6 @@
-package com.brain.pulsar
+package com.brain.pulsar.colony.buildables
+
+import com.brain.pulsar.colony.resources.ResourceType
 
 data class District (
 		var districtType: DistrictType

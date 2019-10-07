@@ -1,4 +1,4 @@
-package com.brain.pulsar
+package com.brain.pulsar.body
 
 class Body {
 }
