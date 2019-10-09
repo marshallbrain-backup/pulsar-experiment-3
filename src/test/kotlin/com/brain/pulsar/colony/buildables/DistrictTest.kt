@@ -13,7 +13,7 @@ internal class DistrictTest {
 	private val districtType = DistrictType("test", 0,
 			upkeep = listOf(Resource(energy, 1)),
 			production = listOf(Resource(minerals, 4)))
-	private val district = District(districtType)
+	private val district = District(ConstructionQueue())
 	
 	@Nested
 	inner class Resources() {
