@@ -5,6 +5,7 @@ import com.brain.pulsar.colony.resources.ResourceType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import kotlin.math.min
 
 internal class DistrictTest {
 	
@@ -21,31 +22,15 @@ internal class DistrictTest {
 		district.queueRetool(districtType)
 	}
 	
-	@Nested
-	inner class Resources() {
+	@Test
+	fun production() {
+		val actual = district.bucket.bucket
+		val expected = mapOf(
+				Pair("production.minerals", Resource(minerals, 4)),
+				Pair("upkeep.energy", Resource(energy, 1))
+		)
 		
-		@Test
-		fun production() {
-			val actual = district.resourceProduction
-			val expected = mapOf(Pair(minerals, 4))
-			
-			assertThat(actual).containsAllEntriesOf(expected)
-		}
-		
-		@Test
-		fun upkeep() {
-			val actual = district.resourceUpkeep
-			val expected = mapOf(Pair(energy, 1))
-			
-			assertThat(actual).containsAllEntriesOf(expected)
-		}
-		
-		@Test
-		fun cost() {}
-		
-		@Test
-		fun job() {}
-		
+		assertThat(actual).containsAllEntriesOf(expected)
 	}
 	
 	@Nested
