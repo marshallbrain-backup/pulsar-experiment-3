@@ -1,10 +1,11 @@
 package com.brain.pulsar.colony.resources
 
 class ResourceBucket(
-		path: String
 ) {
 	
 	val bucket = mutableMapOf<String, Resource>()
+	
+	lateinit var path: String
 	
 	fun addResources(list: List<Resource>, type: String) {
 		for (r in list){
