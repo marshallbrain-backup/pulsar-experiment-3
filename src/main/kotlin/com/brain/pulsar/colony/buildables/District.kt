@@ -1,13 +1,13 @@
 package com.brain.pulsar.colony.buildables
 
+import com.brain.pulsar.colony.resources.ResourceBucket
 import com.brain.pulsar.colony.resources.ResourceType
 
 data class District(
 		private val constructionQueue: ConstructionQueue
 ){
 	
-	val resourceUpkeep = mutableMapOf<ResourceType, Int>()
-	val resourceProduction = mutableMapOf<ResourceType, Int>()
+	val bucket = ResourceBucket()
 	
 	lateinit var districtType: DistrictType
 	var amount = 0
@@ -25,23 +25,12 @@ data class District(
 	
 	private fun initialize() {
 		
-		resourceProduction.clear()
-		resourceUpkeep.clear()
+		bucket.clear()
+		bucket.path = districtType.id
 		amount = 0
 		
-		for (r in districtType.upkeep){
-			val t = resourceUpkeep.putIfAbsent(r.resourceType, r.amount)
-			if (t != null) {
-				resourceUpkeep[r.resourceType] = t + r.amount
-			}
-		}
-		
-		for (r in districtType.production){
-			val t = resourceProduction.putIfAbsent(r.resourceType, r.amount)
-			if (t != null) {
-				resourceProduction[r.resourceType] = t + r.amount
-			}
-		}
+		bucket.addResources(districtType.upkeep, "upkeep")
+		bucket.addResources(districtType.production, "production")
 		
 	}
 	
