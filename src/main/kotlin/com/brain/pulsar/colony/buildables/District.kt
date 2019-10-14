@@ -10,13 +10,16 @@ data class District(
 	val resourceProduction = mutableMapOf<ResourceType, Int>()
 	
 	lateinit var districtType: DistrictType
+	var amount = 0
 	
-	fun queueRetool(districtType: DistrictType, instant: Boolean = true){
-		constructionQueue.add(this::retool)
+	fun queueRetool(retoolType: DistrictType, instant: Boolean = true){
+		constructionQueue.add({
+			retool(retoolType)
+		}, if(instant or !this::districtType.isInitialized) 0 else retoolType.buildTime)
 	}
 	
-	private fun retool(districtType: DistrictType){
-		this.districtType = districtType
+	private fun retool(retoolType: DistrictType){
+		this.districtType = retoolType
 		initialize()
 	}
 	
@@ -24,6 +27,7 @@ data class District(
 		
 		resourceProduction.clear()
 		resourceUpkeep.clear()
+		amount = 0
 		
 		for (r in districtType.upkeep){
 			val t = resourceUpkeep.putIfAbsent(r.resourceType, r.amount)
@@ -39,6 +43,16 @@ data class District(
 			}
 		}
 		
+	}
+	
+	fun queueBuild(instant: Boolean = true){
+		constructionQueue.add({
+			build()
+		}, if(instant or !this::districtType.isInitialized) 0 else districtType.buildTime)
+	}
+	
+	private fun build() {
+		amount++
 	}
 	
 }
