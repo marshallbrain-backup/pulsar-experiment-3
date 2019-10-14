@@ -13,7 +13,13 @@ internal class DistrictTest {
 	private val districtType = DistrictType("test", 0,
 			upkeep = listOf(Resource(energy, 1)),
 			production = listOf(Resource(minerals, 4)))
-	private val district = District(ConstructionQueue())
+	
+	private val queue = ConstructionQueue()
+	private val district = District(queue)
+	
+	init {
+		district.queueRetool(districtType)
+	}
 	
 	@Nested
 	inner class Resources() {
@@ -46,10 +52,24 @@ internal class DistrictTest {
 	inner class Construction() {
 		
 		@Test
-		fun retooling() {}
+		fun retooling() {
+			val districtType = DistrictType("new test", 0,
+					upkeep = listOf(Resource(energy, 2)),
+					production = listOf(Resource(minerals, 8)))
+			district.queueRetool(districtType)
+			
+			assertThat(district.districtType).isEqualTo(
+					DistrictType("new test", 0,
+					upkeep = listOf(Resource(energy, 2)),
+					production = listOf(Resource(minerals, 8)))
+			)
+		}
 		
 		@Test
-		fun build() {}
+		fun build() {
+			district.queueBuild()
+			assertThat(district.amount).isEqualTo(1)
+		}
 		
 		@Test
 		fun demolish() {}
