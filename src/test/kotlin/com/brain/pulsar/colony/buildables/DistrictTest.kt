@@ -16,7 +16,7 @@ internal class DistrictTest {
 			production = listOf(Resource(minerals, 4)))
 	
 	private val queue = ConstructionQueue()
-	private val district = District(queue)
+	private val district = District(DistrictType("null"), queue)
 	
 	init {
 		district.queueRetool(districtType)
@@ -24,6 +24,7 @@ internal class DistrictTest {
 	
 	@Test
 	fun production() {
+		district.queueBuild(true)
 		val actual = district.bucket.bucket
 		val expected = mapOf(
 				Pair("production.minerals", Resource(minerals, 4)),

@@ -10,8 +10,8 @@ data class Colony (
 ){
 	
 	private val constructionQueue = ConstructionQueue()
-	val emptyDistrict = DistrictType("empty")
-	val districts = List(5) { _ -> District(constructionQueue) }
+	private val emptyDistrict = DistrictType("empty")
+	val districts = List(5) { District(emptyDistrict, constructionQueue) }
 	
 	init {
 	}
