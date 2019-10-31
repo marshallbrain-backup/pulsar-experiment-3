@@ -4,18 +4,18 @@ import com.brain.pulsar.colony.resources.ResourceBucket
 import com.brain.pulsar.colony.resources.ResourceType
 
 data class District(
+		var districtType: DistrictType,
 		private val constructionQueue: ConstructionQueue
 ){
 	
 	val bucket = ResourceBucket()
 	
-	lateinit var districtType: DistrictType
 	var amount = 0
 	
 	fun queueRetool(retoolType: DistrictType, instant: Boolean = true){
 		constructionQueue.add({
 			retool(retoolType)
-		}, if(instant or !this::districtType.isInitialized) 0 else retoolType.buildTime)
+		}, if(instant) 0 else retoolType.buildTime)
 	}
 	
 	private fun retool(retoolType: DistrictType){
@@ -37,11 +37,12 @@ data class District(
 	fun queueBuild(instant: Boolean = true){
 		constructionQueue.add({
 			build()
-		}, if(instant or !this::districtType.isInitialized) 0 else districtType.buildTime)
+		}, if(instant) 0 else districtType.buildTime)
 	}
 	
 	private fun build() {
 		amount++
+		bucket.modifyAmount(amount)
 	}
 	
 }
