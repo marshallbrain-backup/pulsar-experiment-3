@@ -1,14 +1,17 @@
 package com.brain.pulsar.colony.buildables
 
+import com.brain.ion.handler.Event
+import com.brain.ion.handler.EventHandler
 import com.brain.pulsar.colony.resources.ResourceBucket
-import com.brain.pulsar.colony.resources.ResourceType
 
 data class District(
 		var districtType: DistrictType,
+		val eventHandler: EventHandler,
 		private val constructionQueue: ConstructionQueue
 ){
 	
 	val bucket = ResourceBucket()
+	val event : EventType = E()
 	
 	var amount = 0
 	
@@ -34,7 +37,7 @@ data class District(
 		
 	}
 	
-	fun queueBuild(instant: Boolean = true){
+	fun queueBuild(instant: Boolean = false){
 		constructionQueue.add({
 			build()
 		}, if(instant) 0 else districtType.buildTime)
@@ -43,6 +46,17 @@ data class District(
 	private fun build() {
 		amount++
 		bucket.modifyAmount(amount)
+		eventHandler.trigger(this, event.build)
+	}
+	
+	private inner class E : EventType{
+		
+		override val build = Event()
+		
+	}
+	
+	interface EventType {
+		val build: Event
 	}
 	
 }
