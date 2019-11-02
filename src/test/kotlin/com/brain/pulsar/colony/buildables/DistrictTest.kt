@@ -1,11 +1,11 @@
 package com.brain.pulsar.colony.buildables
 
+import com.brain.ion.handler.EventHandler
 import com.brain.pulsar.colony.resources.Resource
 import com.brain.pulsar.colony.resources.ResourceType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import kotlin.math.min
 
 internal class DistrictTest {
 	
@@ -16,7 +16,7 @@ internal class DistrictTest {
 			production = listOf(Resource(minerals, 4)))
 	
 	private val queue = ConstructionQueue()
-	private val district = District(DistrictType("null"), queue)
+	private val district = District(DistrictType("null"), EventHandler(), queue)
 	
 	init {
 		district.queueRetool(districtType)
