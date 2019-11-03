@@ -4,7 +4,7 @@ class ConstructionQueue {
 	
 	private val queue = mutableListOf<QueueEntry>()
 	
-	fun add(done: () -> Unit, time: Int) {
+	fun add(time: Int, done: () -> Unit) {
 		if(time == 0) {
 			done()
 		} else {
