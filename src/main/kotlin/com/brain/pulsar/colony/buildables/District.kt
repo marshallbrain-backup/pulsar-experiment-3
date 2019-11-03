@@ -16,9 +16,9 @@ data class District(
 	var amount = 0
 	
 	fun queueRetool(retoolType: DistrictType, instant: Boolean = true){
-		constructionQueue.add({
+		constructionQueue.add(if(instant) 0 else retoolType.buildTime){
 			retool(retoolType)
-		}, if(instant) 0 else retoolType.buildTime)
+		}
 	}
 	
 	private fun retool(retoolType: DistrictType){
@@ -38,9 +38,15 @@ data class District(
 	}
 	
 	fun queueBuild(instant: Boolean = false){
-		constructionQueue.add({
+		constructionQueue.add(if(instant) 0 else districtType.buildTime) {
 			build()
-		}, if(instant) 0 else districtType.buildTime)
+		}
+	}
+	
+	fun queueDemolish() {
+		constructionQueue.add(0) {
+			demolish()
+		}
 	}
 	
 	private fun build() {
@@ -49,14 +55,22 @@ data class District(
 		eventHandler.trigger(this, event.build)
 	}
 	
+	private fun demolish(){
+		if (amount-1 >= 0) {
+			amount--
+		}
+		bucket.modifyAmount(amount)
+		eventHandler.trigger(this, event.demolish)
+	}
+	
 	private inner class E : EventType{
-		
 		override val build = Event()
-		
+		override val demolish = Event()
 	}
 	
 	interface EventType {
 		val build: Event
+		val demolish: Event
 	}
 	
 }
