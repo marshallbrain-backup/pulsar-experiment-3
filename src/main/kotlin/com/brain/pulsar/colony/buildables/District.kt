@@ -11,7 +11,6 @@ data class District(
 ){
 	
 	val bucket = ResourceBucket()
-	val event : EventType = E()
 	
 	var amount = 0
 	
@@ -63,14 +62,11 @@ data class District(
 		eventHandler.trigger(this, event.demolish)
 	}
 	
-	private inner class E : EventType{
-		override val build = Event()
-		override val demolish = Event()
 	}
 	
-	interface EventType {
-		val build: Event
-		val demolish: Event
+	enum class Event: EventType {
+		BUILD,
+		DEMOLISH
 	}
 	
 }
