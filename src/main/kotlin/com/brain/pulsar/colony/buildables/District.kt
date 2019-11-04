@@ -1,11 +1,13 @@
 package com.brain.pulsar.colony.buildables
 
-import com.brain.ion.handler.Event
 import com.brain.ion.handler.EventHandler
+import com.brain.ion.handler.EventType
+import com.brain.pulsar.colony.Colony
 import com.brain.pulsar.colony.resources.ResourceBucket
 
 data class District(
 		var districtType: DistrictType,
+		val parentColony: Colony,
 		val eventHandler: EventHandler,
 		private val constructionQueue: ConstructionQueue
 ){
@@ -49,19 +51,21 @@ data class District(
 	}
 	
 	private fun build() {
-		amount++
-		bucket.modifyAmount(amount)
-		eventHandler.trigger(this, event.build)
+		if (parentColony.currentDistrictSlots > 0) {
+			amount++
+			parentColony.updateDistrictSlots()
+			bucket.modifyAmount(amount)
+			eventHandler.trigger(this, Event.BUILD)
+		}
 	}
 	
 	private fun demolish(){
 		if (amount-1 >= 0) {
 			amount--
+			parentColony.updateDistrictSlots()
+			bucket.modifyAmount(amount)
+			eventHandler.trigger(this, Event.DEMOLISH)
 		}
-		bucket.modifyAmount(amount)
-		eventHandler.trigger(this, event.demolish)
-	}
-	
 	}
 	
 	enum class Event: EventType {
