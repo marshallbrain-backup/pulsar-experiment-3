@@ -13,9 +13,18 @@ data class Colony (
 	
 	private val constructionQueue = ConstructionQueue()
 	private val emptyDistrict = DistrictType("empty")
-	val districts = List(5) { District(emptyDistrict, eventHandler, constructionQueue) }
+	val districts = List(5) { District(emptyDistrict, this, eventHandler, constructionQueue) }
 	
-	init {
+	var totalDistrictSlots = 18
+		private set
+	var currentDistrictSlots = totalDistrictSlots
+		private set
+	
+	fun updateDistrictSlots() {
+		currentDistrictSlots = totalDistrictSlots
+		for (d in districts) {
+			currentDistrictSlots -= d.amount
+		}
 	}
 
 }
